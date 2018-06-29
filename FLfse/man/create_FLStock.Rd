@@ -18,9 +18,9 @@ create_FLStock(stk, idx, it, ny, nsqy = 3, qmod, fmod, mcsave = 100,
 
 \item{nsqy}{number of years to compute status quo metrics, default set at 3}
 
-\item{qmod}{catchability submodel, set with smooting spline, default list(~s(age, k=6))}
+\item{qmod}{catchability submodel}
 
-\item{fmod}{fishing mortality submodel as a tensor spline,
+\item{fmod}{fishing mortality submodel
 default ~te(replace(age, age>9,9), year, k=c(6,8))}
 
 \item{mcsave}{mcmc parameter, default 100}
@@ -36,4 +36,5 @@ Function to create FLStock of the OM for MSE simulation
 \details{
 creates the FLStock, script based on
 http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html
+It uses a4aSCA to run the assessment on existing FLStock and FLIndices objects
 }
