@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #' Function to include error in the projected index
 #'
 #' @param stk object of class FLStock
@@ -46,7 +45,7 @@ getCtrl <- function(values, quantity, years, it){
   ctrl <- fwdControl(data.frame(year=years, quantity=quantity, val=NA))
   ctrl@trgtArray <- arr0
   ctrl
-=======
+
 ### ------------------------------------------------------------------------ ###
 ### additional functions (internal) ####
 ### ------------------------------------------------------------------------ ###
@@ -87,5 +86,4 @@ adapt_dims <- function(obj1, obj2, fill.iter = FALSE) {
 
   return(res)
 
->>>>>>> a51ecb299f2d009e5f2385c8de151af1517a52ad
 }
