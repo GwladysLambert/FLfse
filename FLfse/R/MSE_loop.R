@@ -19,6 +19,9 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
                     assessment= "sam", Bpa, Fmsy,
                     seed.nb=321) {
 
+  # warnings and stops
+  if (dim(stk)[1] != dim(stk)[2]) stop('different max age in FLIndices and FLStock will not work')
+  
   # set yrs
   y0 <- range(stk)["minyear"] # initial data year
   iy <- dy+1      # 1st yr of projection
