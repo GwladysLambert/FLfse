@@ -19,6 +19,8 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
                     assessment= "sam", Bpa, Fmsy,
                     seed.nb=321) {
   
+  browser()
+  
   # warnings and stops
   if (range(stk)[2] != range(idx)[2]) stop('different max age in FLIndices and FLStock will not work')
   
