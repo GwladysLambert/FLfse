@@ -2,11 +2,15 @@
 
 export(FLR_SAM)
 export(FLR_SPiCT)
+<<<<<<< HEAD
 export(create_FLIndices)
 export(create_FLStock)
 export(getCtrl)
 export(observation_error_proj)
 export(run_mse)
+=======
+export(SAM2FLStock)
+>>>>>>> a51ecb299f2d009e5f2385c8de151af1517a52ad
 import(FLCore)
 import(FLa4a)
 import(methods)
