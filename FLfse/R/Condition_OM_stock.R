@@ -111,6 +111,8 @@ create_FLIndices <- function(idx, stk, stk0, it) {
   # Set up the FLIndices object and populate it
   # (note, FLIndices potentially has more than one index, hence the for loop)
 
+  browser()
+  
   idcs <- FLIndices()
 
   for (i in 1:length(idx)){
