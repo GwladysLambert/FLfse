@@ -2,6 +2,12 @@
 
 export(FLR_SAM)
 export(FLR_SPiCT)
+export(create_FLIndices)
+export(create_FLStock)
+export(getCtrl)
+export(observation_error_proj)
+export(run_mse)
 import(FLCore)
+import(FLa4a)
 import(methods)
 importFrom(utils,capture.output)

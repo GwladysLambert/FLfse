@@ -30,7 +30,7 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
   TAC <- FLQuant(NA, dimnames=list(TAC="all", year=c(dy,vy), iter=1:dim(stk)[6]))
   TAC[,ac(dy)] <- catch(stk)[,ac(dy)]
   TAC[,ac(iy)] <- TAC[,ac(dy)] #assume same TAC in the first intermediate year
-  ctrl <- getCtrl(c(TAC[,ac(iy)]), "catch", iy, dim(stk)[6]) # dim(stk.om)[6] is "it" (iterations)
+  ctrl   <- getCtrl(c(TAC[,ac(iy)]), "catch", iy, dim(stk)[6]) # dim(stk.om)[6] is "it" (iterations)
   # Set up the operating model FLStock object
   stk.om <- fwd(stk, control=ctrl, sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
 
@@ -38,7 +38,7 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
   set.seed(seed.nb) # set seed to ensure comparability between different runs
   for(i in vy[-length(vy)]){
     # set up simulations parameters
-    ay <- an(i)
+    ay  <- an(i)
     cat(i, " > ")
     flush.console()
     vy0 <- 1:(ay-y0) # data years (positions vector) - one less than current year
@@ -48,7 +48,7 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
     oem <- observation_error_proj(stk.om, idx, i, vy0)
     stk.mp <- oem$stk
     idx.mp <- oem$idx
-    idx <- oem$idx.om
+    idx    <- oem$idx.om
 
     # perform assessment
     #out.assess <- xsa(stk.mp, idx.mp)
@@ -71,14 +71,14 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
 
     # project the perceived stock to get the TAC for ay+1
     fsq.mp <- yearMeans(fbar(stk.mp)[,sqy]) # Use status quo years defined above
-    ctrl <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), it)
+    ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), it)
     stk.mp <- stf(stk.mp, 2)
     gmean_rec <- c(exp(yearMeans(log(rec(stk.mp)))))
-    stk.mp <- fwd(stk.mp, control=ctrl, sr=list(model="mean", params = FLPar(gmean_rec,iter=it)))
+    stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model="mean", params = FLPar(gmean_rec,iter=it)))
     TAC[,ac(ay+1)] <- catch(stk.mp)[,ac(ay+1)]
 
     # apply the TAC to the operating model stock
-    ctrl <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, it)
+    ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, it)
     stk.om <- fwd(stk.om, control=ctrl,sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
   }
 

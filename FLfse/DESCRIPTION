@@ -15,10 +15,11 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    methods
+    methods,
+    FLa4a
 Depends:
     FLCore (>= 2.6.5.9021)
-Suggests: 
+Suggests:
     spict (>= 1.2.1),
     stockassessment (>= 0.5.4),
     mgcv,
