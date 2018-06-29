@@ -121,9 +121,9 @@ create_FLIndices <- function(idx, stk, stk0, it) {
     lst        <- mcf(list(index(idx[[i]]), stock.n(stk0))) # make FLQuants same dimensions
     
     # Temporary - if the above creates NAs du to difference in number of ages between stk and idx then copy last line of data over
-    if (range(idx[[i]])[2] > range(stk0)[2]) {
-      for (j in setdiff(seq(length=range(idx[[i]])[2]),seq(length=range(stk0)[2]))) {
-      lst[[2]][j,] <- lst[[2]][c(j-1),]
+    if (range(idx[[i]])[2] < range(stk0)[2]) {
+      for (j in setdiff(seq(length=range(stk0)[2]), seq(length=range(idx[[i]])[2]))) {
+      lst[[1]][j,] <- lst[[1]][c(j-1),]
       }
     }
     
