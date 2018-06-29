@@ -18,14 +18,11 @@ Imports:
     methods,
     FLa4a
 Depends:
-<<<<<<< HEAD
     FLCore (>= 2.6.5.9021)
 Suggests:
-=======
     FLCore (>= 2.6.5),
     foreach
 Suggests: 
->>>>>>> a51ecb299f2d009e5f2385c8de151af1517a52ad
     spict (>= 1.2.1),
     stockassessment (>= 0.5.4),
     mgcv,

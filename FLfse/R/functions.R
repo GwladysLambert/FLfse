@@ -45,6 +45,7 @@ getCtrl <- function(values, quantity, years, it){
   ctrl <- fwdControl(data.frame(year=years, quantity=quantity, val=NA))
   ctrl@trgtArray <- arr0
   ctrl
+}
 
 ### ------------------------------------------------------------------------ ###
 ### additional functions (internal) ####
