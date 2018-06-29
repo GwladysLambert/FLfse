@@ -74,14 +74,14 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
 
     # project the perceived stock to get the TAC for ay+1
     fsq.mp <- yearMeans(fbar(stk.mp)[,sqy]) # Use status quo years defined above
-    ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), it)
+    ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), dim(stk.om)[6])
     stk.mp <- stf(stk.mp, 2)
     gmean_rec <- c(exp(yearMeans(log(rec(stk.mp)))))
-    stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model="mean", params = FLPar(gmean_rec,iter=it)))
+    stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model="mean", params = FLPar(gmean_rec,iter=dim(stk.om)[6])))
     TAC[,ac(ay+1)] <- catch(stk.mp)[,ac(ay+1)]
 
     # apply the TAC to the operating model stock
-    ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, it)
+    ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, dim(stk.om)[6])
     stk.om <- fwd(stk.om, control=ctrl,sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
   }
 
