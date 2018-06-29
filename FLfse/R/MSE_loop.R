@@ -57,7 +57,7 @@ run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
     if (assessment=="sam") {
       require(stockassessment)
       out.assess <- FLR_SAM(stk.mp, idx.mp)
-      stk.mp     <- sam2FLStock(out.assess)
+      stk.mp     <- SAM2FLStock(out.assess)
     }
     if (assessment=="spict") {
       require(stockassessment)
