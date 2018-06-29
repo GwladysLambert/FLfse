@@ -21,7 +21,7 @@ Depends:
     FLCore (>= 2.6.5.9021)
 Suggests:
     FLCore (>= 2.6.5),
-    foreach
+    foreach,
     spict (>= 1.2.1),
     stockassessment (>= 0.5.4),
     mgcv,
