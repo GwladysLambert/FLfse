@@ -20,10 +20,10 @@ create_FLStock <- function (stk, idx, it, qmod = NULL, # = list(~s(age, k=6)) sm
                             fmod = NULL, # = ~te(replace(age, age>9,9), year, k=c(6,8) tensor spline
                             mcsave=100) {
 
+  
   require(FLa4a)
   require(FLBRP)
   require(FLAssess)
-  #require(FLash)
 
   mcmc <- it * mcsave
 

@@ -25,6 +25,7 @@ FLR_SAM_run <- function(stk, idx, conf = NULL,
                         ) {
 
   #browser()
+  require(doParallel)
   
   ### check if required package is available
   if (!requireNamespace("stockassessment", quietly = TRUE)) {
