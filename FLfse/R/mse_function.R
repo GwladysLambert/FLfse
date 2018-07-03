@@ -68,7 +68,7 @@ mse_fn <- function(stk, idx,
       require(stockassessment)
       out.assess <- FLR_SPiCT(stk.mp, idx.mp)
       stk.mp     <- out.assess
-    }
+    } 
     # apply ICES MSY-like Rule to obtain Ftrgt
     # (note this is not the ICES MSY rule, but is similar)
     flag <- ssb(stk.mp)[,ac(ay-1)]<Bpa

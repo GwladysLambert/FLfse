@@ -50,7 +50,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ### ~~~ Set up the OM ~~~ ###
   #############################
   
-  #browser()
+  browser()
   
   ## This is to create an FLStock from a real stock
   # results in a list of 2 - one FLStock with iterations, one FLStock median for ref points calculations later
@@ -83,7 +83,8 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ### ~~~ Set up the Observation model ~~~ ###
   ############################################
   
-  ## Prepare the FLStock object for projections
+  ## Prepare the FLStock object for projections - this provides wts and fbars for fy-dy yrs, 
+  #  averageing over last nsqy yrs of data
   stk_om$stk   <-   stf(stk_om$stk, fy-dy, nsqy, nsqy)
   
 
