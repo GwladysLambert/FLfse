@@ -55,7 +55,7 @@ FLR_SAM_run <- function(stk, idx, conf = NULL,
   }
 
   ### set parallel or serial processing of iterations
-  `%do_tmp%` <- ifelse(isTRUE(DoParallel), `%dopar%`, `%do%`)
+  '%do_tmp%' <- ifelse(isTRUE(DoParallel), '%dopar%', '%do%')
 
   ### go through iterations
   res_iter <- foreach(i = seq(dims(stk)$iter), .errorhandling = "pass",
