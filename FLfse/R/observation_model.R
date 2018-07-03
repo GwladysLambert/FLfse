@@ -14,6 +14,8 @@
 
 create_FLIndices <- function(idx, stk, stk0, it) {
   
+  browser()
+  
   # Estimate the index catchabilities from the a4a fit (without simulation)
   # Observation error is introduced through the index catchability-at-age
   # Set up the FLIndices object and populate it
