@@ -96,7 +96,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
 ###################################
   
   final_mse    <-   mse_fn(stk = stk_om$stk, idx = idx_info,                    # stk and idx
-                           y0 = y0, iy = iy, dy = dy, vy =vy, nsqy = nsqy,      # info on yrs
+                           y0 = y0, iy = iy, dy = dy, fy =fy, nsqy = nsqy,      # info on yrs
                            srbh= sr_om$srbh, srbh.res= sr_om$srbh.res,          # stock recruit
                            assessment= assessment,                              # model to use in the forecasted years
                            Bpa=refpts_om$Bpa, Fmsy=refpts_om$Fmsy)              # reference points
