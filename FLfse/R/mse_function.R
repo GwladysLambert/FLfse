@@ -87,5 +87,7 @@ mse_fn <- function(stk, idx,
     stk.om <- fwd(stk.om, control=ctrl,sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
   }
 
+  return(stk.om)
+  
 }
 
