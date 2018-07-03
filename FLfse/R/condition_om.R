@@ -3,13 +3,10 @@
 #' @param stk object of class FLStock
 #' @param idx object of class FLIndices
 #' @param it iterations
-#' @param ny number of years to project from initial year (iy = maxyear of stk + 1)
-#' @param nsqy number of years to compute status quo metrics, default set at 3
 #' @param qmod catchability submodel
 #' @param fmod fishing mortality submodel
 #' default ~te(replace(age, age>9,9), year, k=c(6,8))
 #' @param mcsave mcmc parameter, default 100
-#' @param sr stock-recruit model, default is bevholt
 #'
 #' @details creates the FLStock, script based on
 #' http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html

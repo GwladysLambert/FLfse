@@ -4,16 +4,29 @@
 \alias{mse_base}
 \title{Run the full MSE}
 \usage{
-mse_base(stk, idx, it, ny, assessment = "sam")
+mse_base(stk, idx, it, ny, nsqy = 3, sr_init = "bevholt",
+  fmod_init = NULL, qmod_init = NULL, mcmc_init = 100,
+  assessment = "sam")
 }
 \arguments{
 \item{stk}{object of class FLStock}
 
 \item{idx}{object of class FLindex}
 
-\item{it}{}
+\item{it}{number of iterations}
 
 \item{ny}{number of years to project from initial year (iy = maxyear of stk + 1)}
+
+\item{nsqy}{number of years to compute status quo metrics, default set at 3}
+
+\item{sr_init}{stock-recruit model for the OM set up, default is bevholt}
+
+\item{fmod_init}{fishing mortality submodel for the OM set up
+default ~te(replace(age, age>9,9), year, k=c(6,8))}
+
+\item{qmod_init}{catchability submodel for the OM set up}
+
+\item{mcmc_init}{number of mcmc for the OM set up}
 
 \item{assessment}{assessment model to be used, default is sam (will also be set up for spict)}
 }
@@ -25,7 +38,17 @@ Run the full MSE
 }
 \examples{
 \dontrun{
-stk = ple4
-idx = FLIndices(idx=ple4.index)
+
+## Run ple4 example - need to adjust for different number of ages between stk and idx
+data(ple4)
+data(ple4.index)
+stk   = ple4[1:8,]
+idx   = FLIndices(idx=ple4.index)
+test_ple  <-  mse_base(stk = ple4, idx = FLIndices(idx=ple4.index), it = 2, ny = 3)
+
+## Run cod example
+data("cod4_stk")
+data("cod4_idx")
+test_cod  <-  mse_base(stk = cod4_stk, idx = cod4_idx, it = 2, ny = 3)
 }
 }
