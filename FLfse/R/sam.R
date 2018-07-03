@@ -24,7 +24,7 @@ FLR_SAM_run <- function(stk, idx, conf = NULL,
                         DoParallel = FALSE ### compute iterations in parallel
                         ) {
 
-  #browser()
+  browser()
   
   ### check if required package is available
   if (!requireNamespace("stockassessment", quietly = TRUE)) {
