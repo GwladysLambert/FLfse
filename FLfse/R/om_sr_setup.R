@@ -19,8 +19,8 @@ om_sr_model <- function(stk, sr_model="bevholt", method="L-BFGS-B", it, iy, fy){
   
   # Fit the stock-recruit model
   if (method == "L-BFGS-B"){
-    srbh  <- fmle(as.FLSR(stk, model=sr_model), method = method, lower=c(1e-6, 1e-6), upper=c(max(rec(stk_om)) * 3, Inf))
-    srbh0 <- fmle(as.FLSR(stk0, model=sr_model), method= method, lower=c(1e-6, 1e-6), upper=c(max(rec(stk_om)) * 3, Inf))
+    srbh  <- fmle(as.FLSR(stk, model=sr_model), method = method, lower=c(1e-6, 1e-6), upper=c(max(rec(stk)) * 3, Inf))
+    srbh0 <- fmle(as.FLSR(stk0, model=sr_model), method= method, lower=c(1e-6, 1e-6), upper=c(max(rec(stk)) * 3, Inf))
   }
   
   # Generate stock-recruit residuals for the projection period
