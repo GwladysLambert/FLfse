@@ -91,7 +91,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ## This is to create an FLindices from a real stock
   idx_info     <-   create_FLIndices(idx =  idx, stk = stk_om$stk, stk0= stk_om$stk0, it = it)
   
-  
+
 ###################################
 ### ~~~ Set up the MSE loop ~~~ ###
 ###################################

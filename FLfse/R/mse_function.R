@@ -41,6 +41,7 @@ mse_fn <- function(stk, idx,
 
   ## NOW LOOP
   set.seed(seed.nb) # set seed to ensure comparability between different runs
+  
   for(i in vy[-length(vy)]){
     # set up simulations parameters
     ay  <- an(i)

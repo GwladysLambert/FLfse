@@ -12,7 +12,7 @@ observation_error_proj <- function(stk, idx, assessmentYear, dataYears) {
   # dataYears is a position vector, not the years themselves
   stk.tmp           <- stk[, dataYears]
   # add small amount to avoid zeros
-  catch.n(stk.tmp)  <- catch.n(stk.tmp) + 0.1
+  catch.n(stk.tmp)  <- catch.n(stk.tmp) + 0.001
   # Generate the indices - just data years
   idx.tmp           <- lapply(idx, function(x) x[,dataYears])
   # Generate observed index

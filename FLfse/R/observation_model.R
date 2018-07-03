@@ -39,9 +39,11 @@ create_FLIndices <- function(idx, stk, stk0, it) {
     }
     
     idx.lq     <- log(lst[[1]]/lst[[2]]) # log catchability of index
+    
     #######################################################################################################
     ## IDEA - when we remove sites, we change catchability at age... should that go here somehow? ##
     #######################################################################################################
+    
     idx.qmu    <- idx.qsig <- stock.n(iter(stk,1)) # create quants
     idx.qmu[]  <- yearMeans(idx.lq) # allocate same mean-at-age to every year
     idx.qsig[] <- sqrt(yearVars(idx.lq)) # allocate same sd-at-age to every year
@@ -54,7 +56,7 @@ create_FLIndices <- function(idx, stk, stk0, it) {
   }
   names(idcs) <- names(idx)
   
-  idx<-idcs[1]
+  idx <- idcs #[1]
   
   return(idx)
 }
