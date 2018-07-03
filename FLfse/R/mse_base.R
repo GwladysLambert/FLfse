@@ -8,7 +8,7 @@
 #'
 #' @return mse runs
 #' @export
-#' @example 
+#' @examples 
 #' \dontrun{
 #' stk = ple4
 #' idx = FLIndices(idx=ple4.index)
