@@ -53,6 +53,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   #browser()
   
   ## This is to create an FLStock from a real stock
+  # results in a list of 2 - one FLStock with iterations, one FLStock median for ref points calculations later
   stk_om       <-   create_FLStock(stk =  stk, idx = idx, it = it, fmod = fmod_init, qmod = qmod_init, mcsave = mcmc_init) 
   
   
@@ -75,7 +76,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   # Reference points based on the "median" stk, assuming (for illustrative purposes only)
   # that Bpa=0.5Bmsy and Blim=Bpa/1.4. The stf method is applied to the operating model stk object
   # in order to have the necessary data (mean weights, etc.) for the projection window.
-  refpts_om    <- ref_pts(stk_om$stk0, sr_om$srbh0)
+  refpts_om    <-   ref_pts(stk_om$stk0, sr_om$srbh0)
   
   
   ############################################
@@ -83,7 +84,7 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ############################################
   
   ## Prepare the FLStock object for projections
-  stk_om$stk   <- stf(stk_om$stk, fy-dy, nsqy, nsqy)
+  stk_om$stk   <-   stf(stk_om$stk, fy-dy, nsqy, nsqy)
   
 
   ## This is to create an FLindices from a real stock
