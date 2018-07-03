@@ -3,7 +3,6 @@
 #' @param stk object of class FLStock
 #' @param idx object of class FLindex
 #' @param dy final data year of original FLStock
-#' @param ny number of years to project from initial year (iy = maxyear of stk + 1)
 #' @param nsqy number of years to compute status quo metrics, default set at 3
 #' @param srbh stock-recruit model
 #' @param srbh.res stock-recruit model residuals
@@ -11,23 +10,29 @@
 #' @param Bpa reference point
 #' @param Fmsy reference points
 #' @param seed.nb sets seed
+#' @param y0 intial data year
+#' @param iy intermediate year
+#' @param fy total number of years
 #'
 #' @return mse runs
 #' @export
 
-mse_fn <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
-                    assessment= "sam", Bpa, Fmsy, seed.nb=321) {
+mse_fn <- function(stk, idx, 
+                   y0, iy, dy, vy, nsqy, 
+                   srbh, srbh.res,
+                   assessment= "sam", Bpa, Fmsy, 
+                   seed.nb=321) {
   
-  browser()
+  #browser()
   
   # warnings and stops
   if (range(stk)[2] != range(idx)[2]) stop('different max age in FLIndices and FLStock will not work')
   
-  # set yrs
-  y0 <- range(stk)["minyear"] # initial data year
-  iy <- dy+1      # 1st yr of projection
-  fy <- dy+ny     # total number of yrs
-  vy <- ac(iy:fy) # vector of position of projected years
+  # # set yrs
+  # y0 <- range(stk)["minyear"] # initial data year
+  # iy <- dy+1      # 1st yr of projection
+  # fy <- dy+ny     # total number of yrs
+   vy <- ac(iy:fy) # vector of position of projected years
 
   # Here TAC in the final year of data is assumed to be the realised
   #catch in stk for the same year, while the TAC in the intermediate year is set equal to the TAC in the final year of data
