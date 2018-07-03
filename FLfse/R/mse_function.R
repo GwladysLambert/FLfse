@@ -28,10 +28,6 @@ mse_fn <- function(stk, idx,
   # warnings and stops
   if (range(stk)[2] != range(idx)[2]) stop('different max age in FLIndices and FLStock will not work')
   
-  # # set yrs
-  # y0 <- range(stk)["minyear"] # initial data year
-  # iy <- dy+1      # 1st yr of projection
-  # fy <- dy+ny     # total number of yrs
    vy <- ac(iy:fy) # vector of position of projected years
 
   # Here TAC in the final year of data is assumed to be the realised
