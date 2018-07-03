@@ -16,8 +16,7 @@
 #' @export
 
 mse_fn <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
-                    assessment= "sam", Bpa, Fmsy,
-                    seed.nb=321) {
+                    assessment= "sam", Bpa, Fmsy, seed.nb=321) {
   
   #browser()
   
