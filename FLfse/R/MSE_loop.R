@@ -1,4 +1,4 @@
-#' Run the full MSE
+#' Run the MSE loop
 #'
 #' @param stk object of class FLStock
 #' @param idx object of class FLindex
@@ -15,7 +15,7 @@
 #' @return mse runs
 #' @export
 
-run_mse <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
+mse_fn <- function(stk, idx, dy,  ny, nsqy = 3, srbh, srbh.res,
                     assessment= "sam", Bpa, Fmsy,
                     seed.nb=321) {
   
