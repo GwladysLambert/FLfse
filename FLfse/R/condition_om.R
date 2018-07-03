@@ -21,6 +21,8 @@ create_FLStock <- function (stk, idx, it, qmod = NULL, # = list(~s(age, k=6)) sm
                             mcsave=100) {
 
   
+  browser()
+  
   require(FLa4a)
   require(FLBRP)
   require(FLAssess)
