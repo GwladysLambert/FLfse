@@ -50,8 +50,6 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ### ~~~ Set up the OM ~~~ ###
   #############################
   
-  browser()
-  
   ## This is to create an FLStock from a real stock
   # results in a list of 2 - one FLStock with iterations, one FLStock median for ref points calculations later
   stk_om       <-   create_FLStock(stk =  stk, idx = idx, it = it, fmod = fmod_init, qmod = qmod_init, mcsave = mcmc_init) 
@@ -83,25 +81,25 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ### ~~~ Set up the Observation model ~~~ ###
   ############################################
   
-  ## Prepare the FLStock object for projections - this provides wts and fbars for fy-dy yrs, 
+  ## First prepare the FLStock object for projections - this provides wts and fbars for fy-dy yrs, 
   #  averageing over last nsqy yrs of data
   stk_om$stk   <-   stf(stk_om$stk, fy-dy, nsqy, nsqy)
   
-
   ## This is to create an FLindices from a real stock
-  idx_info     <-   create_FLIndices(idx =  idx, stk = stk_om$stk, stk0= stk_om$stk0, it = it)
+  idx_oem     <-   create_FLIndices(idx =  idx, stk = stk_om$stk, stk0= stk_om$stk0, it = it)
   
-
 ###################################
 ### ~~~ Set up the MSE loop ~~~ ###
 ###################################
   
-  final_mse    <-   mse_fn(stk = stk_om$stk, idx = idx_info,                    # stk and idx
+  stock_om_proj    <-   mse_fn(stk = stk_om$stk, idx = idx_oem,                    # stk and idx
                            y0 = y0, iy = iy, dy = dy, fy =fy, nsqy = nsqy,      # info on yrs
                            srbh= sr_om$srbh, srbh.res= sr_om$srbh.res,          # stock recruit
                            assessment= assessment,                              # model to use in the forecasted years
                            Bpa=refpts_om$Bpa, Fmsy=refpts_om$Fmsy)              # reference points
   
+  
+  return(stock_om_proj)
   
 }
 

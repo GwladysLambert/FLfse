@@ -23,8 +23,6 @@ mse_fn <- function(stk, idx,
                    assessment= "sam", Bpa, Fmsy, 
                    seed.nb=321) {
   
-  browser()
-  
   # warnings and stops
   if (range(stk)[2] != range(idx)[2]) stop('different max age in FLIndices and FLStock will not work')
   
@@ -51,12 +49,12 @@ mse_fn <- function(stk, idx,
     sqy <- (ay-y0-nsqy+1):(ay-y0) # status quo years (positions vector) - one less than current year
 
     # apply observation error
-    oem <- observation_error_proj(stk.om, idx, i, vy0)
+    oem <- observation_error_proj(stk.om, idx, i, vy0) # THIS IS THE OBSERVATION ERROR - SHOULD BE TIED IN TO create_FLIndices somehow for scenarios
     stk.mp <- oem$stk
     idx.mp <- oem$idx
     idx    <- oem$idx.om
 
-    # perform assessment
+    # perform assessment - xsa could be left in as an option!!
     #out.assess <- xsa(stk.mp, idx.mp)
     #stk.mp <- out.assess$stk
 
@@ -88,7 +86,7 @@ mse_fn <- function(stk, idx,
     stk.om <- fwd(stk.om, control=ctrl,sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
   }
 
-  return(stk.om)
+  return(stk.om) # !!! need to set up a tracking FLQuant to extract all info needed along the way (i.e. TAC, Ftrgt etc) !!!
   
 }
 

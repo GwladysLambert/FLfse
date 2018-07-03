@@ -14,14 +14,11 @@
 
 create_FLIndices <- function(idx, stk, stk0, it) {
   
-  browser()
-  
   # Estimate the index catchabilities from the a4a fit (without simulation)
   # Observation error is introduced through the index catchability-at-age
   # Set up the FLIndices object and populate it
   # (note, FLIndices potentially has more than one index, hence the for loop)
   
-  #browser()
   
   idcs <- FLIndices()
   
@@ -51,12 +48,12 @@ create_FLIndices <- function(idx, stk, stk0, it) {
     idx.q      <- rlnorm(it, idx.qmu, idx.qsig)
     idx_temp   <- idx.q * stock.n(stk)
     idx_temp   <- FLIndex(index=idx_temp, index.q=idx.q) # generate initial index
-    range(idx_temp)[c("startf", "endf")] <- c(0, 0) # timing of index (as proportion of year)
+    range(idx_temp)[c("startf", "endf")] <- c(0, 1) # timing of index (as proportion of year)
     idcs[[i]] <- idx_temp
   }
   names(idcs) <- names(idx)
   
-  idx <- idcs #[1]
+  idx <- idcs #[1] - not sure why it was extrating [1] in example script
   
   return(idx)
 }
