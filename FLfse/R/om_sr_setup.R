@@ -26,7 +26,8 @@ om_sr_model <- function(stk, sr_model="bevholt", method="L-BFGS-B", it, iy, fy){
   # Generate stock-recruit residuals for the projection period
   srbh.res  <- rnorm(it, FLQuant(0, dimnames=list(year=iy:fy)), mean(c(apply(residuals(srbh), 6, sd))))
   
-  output_sr <- list(srbh, srbh0, srbh.res)  
+  output_sr        <- list(srbh, srbh0, srbh.res)  
+  names(output_sr) <- c("srbh", "srbh0", "srbh.res") 
   return(output_sr)
   
 }

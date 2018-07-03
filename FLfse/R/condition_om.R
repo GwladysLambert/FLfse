@@ -46,8 +46,11 @@ create_FLStock <- function (stk, idx, it, qmod = NULL, # = list(~s(age, k=6)) sm
   
   # Reduce to keep one iteration only for reference points
   stk0 <- qapply(stk, iterMedians)
+  
+  output_stk        <- list(stk,stk0)
+  names(output_stk) <- c("stk","stk0")
 
-  return(list(stk,stk0))
+  return(output_stk)
 }
 
 

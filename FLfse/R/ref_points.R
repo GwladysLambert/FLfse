@@ -21,7 +21,7 @@ ref_pts <- function(stk, srbh) {
   Bpa  <- 0.5*Bmsy
   Blim <- Bpa/1.4
 
-  output_list <- list(brp,Fmsy,msy,Bmsy,Bpa,Blim)
+  output_list        <- list(brp,Fmsy,msy,Bmsy,Bpa,Blim)
   names(output_list) <- c("brp","Fmsy","msy","Bmsy","Bpa","Blim")
 
   return(output_list)
