@@ -19,12 +19,6 @@ create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100)
 default ~te(replace(age, age>9,9), year, k=c(6,8))}
 
 \item{mcsave}{mcmc parameter, default 100}
-
-\item{ny}{number of years to project from initial year (iy = maxyear of stk + 1)}
-
-\item{nsqy}{number of years to compute status quo metrics, default set at 3}
-
-\item{sr}{stock-recruit model, default is bevholt}
 }
 \value{
 a list of "stk", "dy", "stk0", "srbh","srbh0","srbh.res","brp","Fmsy","msy","Bmsy","Bpa","Blim"

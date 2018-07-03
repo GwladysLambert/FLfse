@@ -4,17 +4,21 @@
 \alias{mse_fn}
 \title{Run the MSE loop}
 \usage{
-mse_fn(stk, idx, dy, ny, nsqy = 3, srbh, srbh.res, assessment = "sam", Bpa,
-  Fmsy, seed.nb = 321)
+mse_fn(stk, idx, y0, iy, dy, fy, nsqy, srbh, srbh.res, assessment = "sam",
+  Bpa, Fmsy, seed.nb = 321)
 }
 \arguments{
 \item{stk}{object of class FLStock}
 
 \item{idx}{object of class FLindex}
 
+\item{y0}{intial data year}
+
+\item{iy}{intermediate year}
+
 \item{dy}{final data year of original FLStock}
 
-\item{ny}{number of years to project from initial year (iy = maxyear of stk + 1)}
+\item{fy}{total number of years}
 
 \item{nsqy}{number of years to compute status quo metrics, default set at 3}
 
