@@ -50,6 +50,8 @@ mse_base <- function(stk, idx, it, ny, nsqy = 3,
   ### ~~~ Set up the OM ~~~ ###
   #############################
   
+  browser()
+  
   ## This is to create an FLStock from a real stock
   stk_om       <-   create_FLStock(stk =  stk, idx = idx, it = it, fmod = fmod_init, qmod = qmod_init, mcsave = mcmc_init) 
   
