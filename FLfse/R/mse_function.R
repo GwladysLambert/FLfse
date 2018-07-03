@@ -18,7 +18,7 @@
 #' @export
 
 mse_fn <- function(stk, idx, 
-                   y0, iy, dy, vy, nsqy, 
+                   y0, iy, dy, fy, nsqy, 
                    srbh, srbh.res,
                    assessment= "sam", Bpa, Fmsy, 
                    seed.nb=321) {
