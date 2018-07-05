@@ -4,7 +4,8 @@
 \alias{create_FLStock}
 \title{Function to create FLStock of the OM for MSE simulation}
 \usage{
-create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100)
+create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100,
+  seed.nb = 321)
 }
 \arguments{
 \item{stk}{object of class FLStock}
@@ -19,6 +20,8 @@ create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100)
 default ~te(replace(age, age>9,9), year, k=c(6,8))}
 
 \item{mcsave}{mcmc parameter, default 100}
+
+\item{seed.nb}{set seed number}
 }
 \value{
 a list of "stk", "dy", "stk0", "srbh","srbh0","srbh.res","brp","Fmsy","msy","Bmsy","Bpa","Blim"

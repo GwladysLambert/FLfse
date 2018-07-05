@@ -4,7 +4,7 @@
 \alias{create_FLIndices}
 \title{Function to create FLIndices of the OM for MSE simulation}
 \usage{
-create_FLIndices(idx, stk, stk0, it)
+create_FLIndices(idx, stk, stk0, it, seed.nb = 321)
 }
 \arguments{
 \item{idx}{object of class FLIndices}
@@ -14,6 +14,8 @@ create_FLIndices(idx, stk, stk0, it)
 \item{stk0}{median of stk iterations created in \link[FLfse]{create_FLStock}}
 
 \item{it}{iterations}
+
+\item{seed.nb}{set seed number}
 }
 \value{
 FLIndices

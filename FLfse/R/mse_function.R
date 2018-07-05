@@ -14,6 +14,8 @@
 #' @param iy intermediate year
 #' @param fy total number of years
 #'
+#' @importFrom FLasher fwdControl
+#' 
 #' @return mse runs
 #' @export
 
@@ -22,6 +24,8 @@ mse_fn <- function(stk, idx,
                    srbh, srbh.res,
                    assessment= "sam", Bpa, Fmsy, 
                    seed.nb=321) {
+  
+  #browser()
   
   # warnings and stops
   if (range(stk)[2] != range(idx)[2]) stop('different max age in FLIndices and FLStock will not work')
@@ -35,8 +39,9 @@ mse_fn <- function(stk, idx,
   TAC[,ac(iy)] <- TAC[,ac(dy)] #assume same TAC in the first intermediate year
   ctrl   <- getCtrl(c(TAC[,ac(iy)]), "catch", iy, dim(stk)[6]) # dim(stk.om)[6] is "it" (iterations)
   # Set up the operating model FLStock object
-  stk.om <- fwd(stk, control=ctrl, sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
-
+  #stk.om <- fwd(stk, control=ctrl, sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
+  stk.om <- fwd(stk, control=ctrl, sr=srbh, residuals = exp(srbh.res))#, mult = TRUE
+  
   ## NOW LOOP
   set.seed(seed.nb) # set seed to ensure comparability between different runs
   
@@ -59,12 +64,12 @@ mse_fn <- function(stk, idx,
     #stk.mp <- out.assess$stk
 
     if (assessment=="sam") {
-      require(stockassessment)
+      #require(stockassessment)
       out.assess <- FLR_SAM(stk.mp, idx.mp)
       stk.mp     <- SAM2FLStock(out.assess)
     }
     if (assessment=="spict") {
-      require(stockassessment)
+      #require(stockassessment)
       out.assess <- FLR_SPiCT(stk.mp, idx.mp)
       stk.mp     <- out.assess
     } 
@@ -76,14 +81,14 @@ mse_fn <- function(stk, idx,
     # project the perceived stock to get the TAC for ay+1
     fsq.mp <- yearMeans(fbar(stk.mp)[,sqy]) # Use status quo years defined above
     ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), dim(stk.om)[6])
-    stk.mp <- stf(stk.mp, 2)
+    stk.mp <- FLasher::stf(stk.mp, 2)
     gmean_rec <- c(exp(yearMeans(log(rec(stk.mp)))))
-    stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model="mean", params = FLPar(gmean_rec,iter=dim(stk.om)[6])))
+    stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model=mean, params = FLPar(gmean_rec,iter=dim(stk.om)[6])))
     TAC[,ac(ay+1)] <- catch(stk.mp)[,ac(ay+1)]
 
     # apply the TAC to the operating model stock
     ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, dim(stk.om)[6])
-    stk.om <- fwd(stk.om, control=ctrl,sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
+    stk.om <- fwd(stk.om, control=ctrl,sr=srbh, residuals = exp(srbh.res)) #, sr.residuals.mult = TRUE ## HAD TO REMOVE THE RESIDUALS MUL = TRUE HERE AS MOVING FROM FLash TO FLasher, IS THERE AN EQUIVALENT???
   }
 
   return(stk.om) # !!! need to set up a tracking FLQuant to extract all info needed along the way (i.e. TAC, Ftrgt etc) !!!

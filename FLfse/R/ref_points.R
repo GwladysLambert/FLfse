@@ -11,13 +11,13 @@
 
 ref_pts <- function(stk, srbh) {
   
-  require(FLBRP)
+  require(FLRP)
   
   # Calculate the reference points
-  brp  <- FLBRP::brp(FLBRP(stk, srbh))
-  Fmsy <- c(FLBRP::refpts(brp)["msy","harvest"])
-  msy  <- c(FLBRP::refpts(brp)["msy","yield"])
-  Bmsy <- c(FLBRP::refpts(brp)["msy","ssb"])
+  brp  <- FLRP::brp(FLBRP(stk, srbh))
+  Fmsy <- c(FLRP::refpts(brp)["msy","harvest"])
+  msy  <- c(FLRP::refpts(brp)["msy","yield"])
+  Bmsy <- c(FLRP::refpts(brp)["msy","ssb"])
   Bpa  <- 0.5*Bmsy
   Blim <- Bpa/1.4
 

@@ -6,13 +6,14 @@
 #' @param it number of iterations
 #' @param iy intermediate year (first year of projection)
 #' @param fy final year of projection
+#' @param seed.nb set seed number
 #'
 #' @return list of median FLSotck, FLSR for FLStock and median FLStock for reference points and
 #' residuals for projection
 #' 
 #' @export
 
-om_sr_model <- function(stk, sr_model="bevholt", method="L-BFGS-B", it, iy, fy){
+om_sr_model <- function(stk, sr_model="bevholt", method="L-BFGS-B", it, iy, fy, seed.nb = 321){
   
   # Reduce to keep one iteration only for reference points - could be an input but easy enough to calculate again
   stk0 <- qapply(stk, iterMedians)
@@ -24,6 +25,7 @@ om_sr_model <- function(stk, sr_model="bevholt", method="L-BFGS-B", it, iy, fy){
   }
   
   # Generate stock-recruit residuals for the projection period
+  set.seed(seed.nb)
   srbh.res  <- rnorm(it, FLQuant(0, dimnames=list(year=iy:fy)), mean(c(apply(residuals(srbh), 6, sd))))
   
   output_sr        <- list(srbh, srbh0, srbh.res)  

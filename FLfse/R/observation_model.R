@@ -4,7 +4,8 @@
 #' @param stk object of class FLStock
 #' @param stk0 median of stk iterations created in \link[FLfse]{create_FLStock}
 #' @param it iterations
-#'
+#' @param seed.nb set seed number
+#' 
 #' @details creates the FLIndices, script based on
 #' http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html
 #'
@@ -12,7 +13,7 @@
 #'
 #' @export
 
-create_FLIndices <- function(idx, stk, stk0, it) {
+create_FLIndices <- function(idx, stk, stk0, it, seed.nb = 321) {
   
   # Estimate the index catchabilities from the a4a fit (without simulation)
   # Observation error is introduced through the index catchability-at-age
@@ -44,7 +45,9 @@ create_FLIndices <- function(idx, stk, stk0, it) {
     idx.qmu    <- idx.qsig <- stock.n(iter(stk,1)) # create quants
     idx.qmu[]  <- yearMeans(idx.lq) # allocate same mean-at-age to every year
     idx.qsig[] <- sqrt(yearVars(idx.lq)) # allocate same sd-at-age to every year
+    
     #   Build index catchability based on lognormal distribution with mean and sd calculated above
+    set.seed(seed.nb)
     idx.q      <- rlnorm(it, idx.qmu, idx.qsig)
     idx_temp   <- idx.q * stock.n(stk)
     idx_temp   <- FLIndex(index=idx_temp, index.q=idx.q) # generate initial index

@@ -4,7 +4,8 @@
 \alias{om_sr_model}
 \title{Fit an SR model to FLStock and create residuals for MSE projection}
 \usage{
-om_sr_model(stk, sr_model = "bevholt", method = "L-BFGS-B", it, iy, fy)
+om_sr_model(stk, sr_model = "bevholt", method = "L-BFGS-B", it, iy, fy,
+  seed.nb = 321)
 }
 \arguments{
 \item{stk}{FLStock}
@@ -18,6 +19,8 @@ om_sr_model(stk, sr_model = "bevholt", method = "L-BFGS-B", it, iy, fy)
 \item{iy}{intermediate year (first year of projection)}
 
 \item{fy}{final year of projection}
+
+\item{seed.nb}{set seed number}
 }
 \value{
 list of median FLSotck, FLSR for FLStock and median FLStock for reference points and

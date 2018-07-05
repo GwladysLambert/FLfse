@@ -6,7 +6,7 @@
 \usage{
 mse_base(stk, idx, it, ny, nsqy = 3, sr_init = "bevholt",
   fmod_init = NULL, qmod_init = NULL, mcmc_init = 100,
-  assessment = "sam")
+  assessment = "sam", seed.nb = 321)
 }
 \arguments{
 \item{stk}{object of class FLStock}
@@ -29,6 +29,8 @@ default ~te(replace(age, age>9,9), year, k=c(6,8))}
 \item{mcmc_init}{number of mcmc for the OM set up}
 
 \item{assessment}{assessment model to be used, default is sam (will also be set up for spict)}
+
+\item{seed.nb}{set seed number}
 }
 \value{
 mse runs

@@ -16,7 +16,11 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     methods,
-    FLa4a
+    FLa4a,
+    FLife,
+    stockassessment,
+    doParallel,
+    FLasher
 Depends:
     FLCore (>= 2.6.5.9021)
 Suggests:

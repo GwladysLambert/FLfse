@@ -7,22 +7,22 @@
 #' @param fmod fishing mortality submodel
 #' default ~te(replace(age, age>9,9), year, k=c(6,8))
 #' @param mcsave mcmc parameter, default 100
+#' @param seed.nb set seed number
 #'
 #' @details creates the FLStock, script based on
 #' http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html
 #' It uses a4aSCA to run the assessment on existing FLStock and FLIndices objects
 #' @return a list of "stk", "dy", "stk0", "srbh","srbh0","srbh.res","brp","Fmsy","msy","Bmsy","Bpa","Blim"
 #'
-#' @import FLa4a
 #'
 #' @export
 create_FLStock <- function (stk, idx, it, qmod = NULL, # = list(~s(age, k=6)) smooting spline
                             fmod = NULL, # = ~te(replace(age, age>9,9), year, k=c(6,8) tensor spline
-                            mcsave=100) {
+                            mcsave=100, seed.nb = 321) {
 
+  set.seed(seed.nb)
+  
   require(FLa4a)
-  require(FLBRP)
-  require(FLAssess)
 
   mcmc <- it * mcsave
 

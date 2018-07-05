@@ -38,12 +38,14 @@ observation_error_proj <- function(stk, idx, assessmentYear, dataYears) {
 #' @export
 #' 
 getCtrl <- function(values, quantity, years, it){
-  dnms <- list(iter=1:it, year=years, c("min", "val", "max"))
+  #browser()
+  dnms <- list(iter=1:it, year=years, c("min", "value", "max"))
   arr0 <- array(NA, dimnames=dnms, dim=unlist(lapply(dnms, length)))
-  arr0[,,"val"] <- unlist(values)
+  arr0[,,"value"] <- unlist(values)
   arr0 <- aperm(arr0, c(2,3,1))
-  ctrl <- fwdControl(data.frame(year=years, quantity=quantity, val=NA))
-  ctrl@trgtArray <- arr0
+  #ctrl <- fwdControl(data.frame(year=years, quantity=quantity, val=NA))
+  #ctrl@trgtArray <- arr0
+  ctrl <- fwdControl(list(year=years, quant=quantity, value=values))
   ctrl
 }
 
@@ -88,3 +90,38 @@ adapt_dims <- function(obj1, obj2, fill.iter = FALSE) {
   return(res)
 
 }
+
+
+### ------------------------------------------------------------------------ ###
+### Functions attached to creating stocks ####
+### ------------------------------------------------------------------------ ###
+
+# oneWayTrip {{{
+oneWayTrip <- function(stk, sr, brp, fmax=refpts(brp)['crash', 'harvest'] * 0.80,
+                       years=seq(dims(stk)$minyear + 1, dims(stk)$maxyear),
+                       residuals=FLQuant(1, dimnames=dimnames(rec(stk))),f0=NULL) {
+  
+  # limits
+  if(is.null(f0)){ 
+    f0 <- c(fbar(stk)[,1])
+  } else{
+    f0=as.vector(f0)
+  }
+  
+  fmax <- c(fmax)
+  rate <- exp((log(fmax) - log(f0)) / (length(years)))
+  
+  # linear trend: f <- rate ^ (seq(0, length(years))) * f0
+  fs <- (matrix(rate, nrow=length(years) + 1, ncol=length(rate)) ^
+           matrix(seq(0, length(years)), nrow=length(years) + 1, ncol=length(rate)) *
+           matrix(f0, nrow=length(years) + 1, ncol=length(rate)))[-1,]
+  
+  # fwdControl
+  ftar <- FLQuant(c(fs), dimnames=list(year=years, iter=seq(length(rate))), quant='age')
+  
+  
+  # fwd
+  res <- fwd(stk, control=as(FLQuants(f=ftar), "fwdControl"), sr=sr, residuals=residuals)
+  
+  return(res)
+} # }}}
