@@ -4,7 +4,7 @@
 \alias{getCtrl}
 \title{Define control object for \link[FLash]{fwd}}
 \usage{
-getCtrl(values, quantity, years, it)
+getCtrl(values, quantity, years)
 }
 \arguments{
 \item{values}{}
@@ -12,8 +12,6 @@ getCtrl(values, quantity, years, it)
 \item{quantity}{}
 
 \item{years}{}
-
-\item{it}{iterations}
 }
 \value{
 ctrl for fwd

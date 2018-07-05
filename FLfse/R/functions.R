@@ -30,21 +30,13 @@ observation_error_proj <- function(stk, idx, assessmentYear, dataYears) {
 #' @param values 
 #' @param quantity 
 #' @param years 
-#' @param it iterations
 #'
 #' @details The fwd method from FLash needs a control object, which is set by this function.
 #'
 #' @return ctrl for fwd
 #' @export
 #' 
-getCtrl <- function(values, quantity, years, it){
-  #browser()
-  dnms <- list(iter=1:it, year=years, c("min", "value", "max"))
-  arr0 <- array(NA, dimnames=dnms, dim=unlist(lapply(dnms, length)))
-  arr0[,,"value"] <- unlist(values)
-  arr0 <- aperm(arr0, c(2,3,1))
-  #ctrl <- fwdControl(data.frame(year=years, quantity=quantity, val=NA))
-  #ctrl@trgtArray <- arr0
+getCtrl <- function(values, quantity, years){
   ctrl <- fwdControl(list(year=years, quant=quantity, value=values))
   ctrl
 }

@@ -37,7 +37,7 @@ mse_fn <- function(stk, idx,
   TAC <- FLQuant(NA, dimnames=list(TAC="all", year=c(dy,vy), iter=1:dim(stk)[6]))
   TAC[,ac(dy)] <- catch(stk)[,ac(dy)]
   TAC[,ac(iy)] <- TAC[,ac(dy)] #assume same TAC in the first intermediate year
-  ctrl   <- getCtrl(c(TAC[,ac(iy)]), "catch", iy, dim(stk)[6]) # dim(stk.om)[6] is "it" (iterations)
+  ctrl   <- getCtrl(c(TAC[,ac(iy)]), "catch", iy) #dim(stk.om)[6] is "it" (iterations)
   # Set up the operating model FLStock object
   #stk.om <- fwd(stk, control=ctrl, sr=srbh, sr.residuals = exp(srbh.res), sr.residuals.mult = TRUE)
   stk.om <- fwd(stk, control=ctrl, sr=srbh, residuals = exp(srbh.res))#, mult = TRUE
@@ -80,14 +80,14 @@ mse_fn <- function(stk, idx,
 
     # project the perceived stock to get the TAC for ay+1
     fsq.mp <- yearMeans(fbar(stk.mp)[,sqy]) # Use status quo years defined above
-    ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1), dim(stk.om)[6])
+    ctrl   <- getCtrl(c(fsq.mp, Ftrgt), "f", c(ay, ay+1)) #, dim(stk.om)[6]
     stk.mp <- FLasher::stf(stk.mp, 2)
     gmean_rec <- c(exp(yearMeans(log(rec(stk.mp)))))
     stk.mp    <- fwd(stk.mp, control=ctrl, sr=list(model=mean, params = FLPar(gmean_rec,iter=dim(stk.om)[6])))
     TAC[,ac(ay+1)] <- catch(stk.mp)[,ac(ay+1)]
 
     # apply the TAC to the operating model stock
-    ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1, dim(stk.om)[6])
+    ctrl   <- getCtrl(c(TAC[,ac(ay+1)]), "catch", ay+1) #, dim(stk.om)[6]
     stk.om <- fwd(stk.om, control=ctrl,sr=srbh, residuals = exp(srbh.res)) #, sr.residuals.mult = TRUE ## HAD TO REMOVE THE RESIDUALS MUL = TRUE HERE AS MOVING FROM FLash TO FLasher, IS THERE AN EQUIVALENT???
   }
 
