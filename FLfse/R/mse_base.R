@@ -1,39 +1,54 @@
 #' Run the full MSE
 #'
-#' @param scens name of scenario
-#' @param stock parameters controling the set up of the FLStock
-#' \code{stock} = list(\code{stk}, \code{latin.name},
-#' \code{common.name}, \code{region}, \code{biol.params}, \code{h})
-#' \code{stk} if using an existing stock assessment - see \code{\link{create_FLStock}} 
-#' \code{latin.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
-#' \code{common.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
-#' \code{region} if using biological parameters - see \code{\link{create_FLStock_biol}} 
-#' \code{biol.params} if using biological parameters - see \code{\link{create_FLStock_biol}} 
-#' \code{h}  if using biological parameters - see \code{\link{create_FLStock_biol}} 
-#' @param ctrl.om parameters controling the set up of the Operating Model
+#' @param scens name of scenario \cr
+#' \code{scens} = list(\code{id}, \code{stringsAsFactors})
+#' \itemize{
+#' \item \code{id} name of scenario
+#' }
+#' @param stock parameters controling the set up of the FLStock \cr
+#' \code{stock} = list(\code{stk}, \code{latin.name},\code{common.name}, \code{region}, 
+#' \code{biol.params}, \code{h})
+#' \itemize{
+#' \item \code{stk} if using an existing stock assessment - see \code{\link{create_FLStock}} 
+#' \item \code{latin.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+#' \item \code{common.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+#' \item \code{region} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+#' \item \code{biol.params} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+#' \item \code{h}  if using biological parameters - see \code{\link{create_FLStock_biol}} 
+#' }
+#' @param ctrl.om parameters controling the set up of the Operating Model \cr
 #' \code{ctrl.om} = list(\code{sr_init}, \code{fmod_init}, \code{qmod_init}, \code{mcmc_init})
-#' \code{sr_init} stock-recruit model for the OM set up, default is bevholt
-#' \code{qmod_init} catchability submodel for the OM set up
-#' \code{fmod_init} fishing mortality submodel for the OM set up
-#' \code{mcmc_init} number of mcmc for the OM set up
-#' @param ctrl.idx parameters controling the set up of the Observation Model
+#' \itemize{
+#' \item \code{sr_init} stock-recruit model for the OM set up, default is bevholt
+#' \item \code{qmod_init} catchability submodel for the OM set up
+#' \item \code{fmod_init} fishing mortality submodel for the OM set up
+#' \item \code{mcmc_init} number of mcmc for the OM set up
+#' }
+#' @param ctrl.idx parameters controling the set up of the Observation Model\cr
 #' \code{ctrl.idx} = list(\code{idx}, \code{qmod_idx}, \code{qmod_pars_idx}, \code{add.error_idx})
-#' \code{idx} if using an existing stock assessment - see \code{\link{create_FLStock}} 
-#' \code{qmod_idx} defines idx selectivity function if idx does not exist as in 
-#' \code{\link{create_FLStock_biol}} approach. Default is NULL, meaning to use default 
+#' \itemize{
+#' \item \code{idx} if using an existing stock assessment - see \code{\link{create_FLStock}} 
+#' \item \code{qmod_idx} defines idx selectivity function if idx does not exist as in 
+#' \item \code{\link{create_FLStock_biol}} approach. Default is NULL, meaning to use default 
 #' settings in \code{\link{create_FLIndices}}
-#' \code{qmod_pars_idx} defines idx selectivity parameters for \code{qmod_idx}
-#' \code{add.error_idx} whether or not the iterated indices should include some random noise, 
+#' \item \code{qmod_pars_idx} defines idx selectivity parameters for \code{qmod_idx}
+#' \item \code{add.error_idx} whether or not the iterated indices should include some random noise, 
 #' set at FALSE by default
-#' @param ctrl.sims parameters controling the set up of the Simulations properties
+#' }
+#' @param ctrl.sims parameters controling the set up of the Simulations properties \cr
 #' \code{ctrl.sims} = list(\code{it}, \code{ny}, \code{nsqy}, \code{seed.nb})
-#' \code{ny number} of years to project from initial year (iy = maxyear of stk + 1), default set at 3
-#' \code{it number} of iterations, default set at 3
-#' \code{nsqy number} of years to compute status quo metrics, default set at 3
-#' \code{param} seed.nb set seed number
-#' @param ctrl.mp parameters controling the set up of the Management Procedure
-#' \code{assessment} assessment model to be used, default is \code{sam} 
+#' \itemize{
+#' \item \code{ny number} of years to project from initial year (iy = maxyear of stk + 1), default set at 3
+#' \item \code{it number} of iterations, default set at 3
+#' \item \code{nsqy number} of years to compute status quo metrics, default set at 3
+#' \item \code{param} seed.nb set seed number
+#' }
+#' @param ctrl.mp parameters controling the set up of the Management Procedure \cr
+#' \code{ctrl.mp} = list(\code{assessment})
+#' \itemize{
+#' \item \code{assessment} assessment model to be used, default is \code{sam} 
 #' (will also be set up for \code{spict})
+#' }
 #' 
 #' @details can run an MSE based on existing stock, using arguments \code{stk} and \code{idx} 
 #' (\code{\link{create_FLStock}}), or biological parameters using \code{latin.name}, \code{common.name}, 
