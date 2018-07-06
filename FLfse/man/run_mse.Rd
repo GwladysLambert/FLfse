@@ -7,7 +7,9 @@
 run_mse(scenarios, parallel = FALSE)
 }
 \arguments{
-\item{scenarios}{list of scenarios to run}
+\item{scenarios}{list of scenarios to run - must be a list of 
+\code{\link{mse_base}} list arguments (see temporary scenarios.R for 
+skeleton and examples below)}
 
 \item{parallel}{if TRUE, will run scenarios in parallel. Default is F}
 }
@@ -28,6 +30,11 @@ simple_scenario2 <- list(scens = list(id = "Linf=100"),
                          ctrl.sims = list(it = 2, ny = 3))
 
 test1 <- run_mse(scenarios=list(simple_scenario1, simple_scenario2), parallel = F)
+
+library(doParallel) 
+n_cores <- 2
+cl <- makeCluster(n_cores) 
+registerDoParallel(cl) 
 test2 <- run_mse(scenarios=list(simple_scenario1, simple_scenario2), parallel = T)
 }
 

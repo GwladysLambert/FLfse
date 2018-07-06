@@ -8,7 +8,3 @@ scenario_skeleton <- list(scns    = data.frame(id = "default", stringsAsFactors 
                       ctrl.sims = list(it=3, ny=3, nsqy = 3, seed.nb= 321), 
                       ctrl.mp   = list(assessment="sam")
 )
-
-# Skeleton
-simple_scenario <- list(scns    = data.frame(id = "default", stringsAsFactors = FALSE),
-                        stock   = list(latin.name="Clupea harengus"))

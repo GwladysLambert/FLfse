@@ -3,7 +3,9 @@
 #' This is the main high-level wrapper function for running \pkg{FLfse}
 #' simulations. 
 #'
-#' @param scenarios list of scenarios to run
+#' @param scenarios list of scenarios to run - must be a list of 
+#' \code{\link{mse_base}} list arguments (see temporary scenarios.R for 
+#' skeleton and examples below)
 #' @param parallel if TRUE, will run scenarios in parallel. Default is F
 #' 
 #' @return output of mse_base
@@ -20,6 +22,11 @@
 #'                          ctrl.sims = list(it = 2, ny = 3))
 #' 
 #' test1 <- run_mse(scenarios=list(simple_scenario1, simple_scenario2), parallel = F)
+#' 
+#' library(doParallel) 
+#' n_cores <- 2
+#' cl <- makeCluster(n_cores) 
+#' registerDoParallel(cl) 
 #' test2 <- run_mse(scenarios=list(simple_scenario1, simple_scenario2), parallel = T)
 #' }
 #' 
@@ -44,10 +51,9 @@ run_mse <- function(scenarios, parallel = FALSE) {
   
   if (parallel) {
     message("Running scenarios in parallel.")
-    output <- foreach::foreach(x = arg_list, .packages = "FLfse", .combine = list,
-                               .init = NULL,
+    output <- foreach::foreach(x = arg_list, .packages = "FLfse", .combine = list, #.export=c("mse_base"),
                                .verbose = TRUE) %dopar% #
-      {do.call("mse_base", x)
+      {do.call("mse_base", c(x))
       message(paste("Finished running",x$scens$id))
       }
   } else {
