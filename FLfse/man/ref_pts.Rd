@@ -4,12 +4,15 @@
 \alias{ref_pts}
 \title{Simple list of reference points}
 \usage{
-ref_pts(stk, srbh)
+ref_pts(stk = NULL, srbh = NULL, brps = NULL)
 }
 \arguments{
-\item{stk}{FLStock (median value if several iterations)}
+\item{stk}{FLStock (provide median value if several iterations)}
 
-\item{srbh}{FLSR (median value if several iterations)}
+\item{srbh}{FLSR (provide median value if several iterations)}
+
+\item{brps}{FLBRP if already existing (no need for other \code{stk}
+or \code{srbh} in that case)}
 }
 \value{
 list of reference points

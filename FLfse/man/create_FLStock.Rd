@@ -2,7 +2,7 @@
 % Please edit documentation in R/condition_om.R
 \name{create_FLStock}
 \alias{create_FLStock}
-\title{Function to create FLStock of the OM for MSE simulation}
+\title{Function to create several iterations of FLStock}
 \usage{
 create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100,
   seed.nb = 321)
@@ -16,21 +16,22 @@ create_FLStock(stk, idx, it, qmod = NULL, fmod = NULL, mcsave = 100,
 
 \item{qmod}{catchability submodel}
 
-\item{fmod}{fishing mortality submodel
-default ~te(replace(age, age>9,9), year, k=c(6,8))}
+\item{fmod}{fishing mortality submodel}
 
 \item{mcsave}{mcmc parameter, default 100}
 
 \item{seed.nb}{set seed number}
 }
 \value{
-a list of "stk", "dy", "stk0", "srbh","srbh0","srbh.res","brp","Fmsy","msy","Bmsy","Bpa","Blim"
+a list of "stk" and "stk0", i.e. the median of all iterations
 }
 \description{
-Function to create FLStock of the OM for MSE simulation
+Function to create several iterations of FLStock
 }
 \details{
-creates the FLStock, script based on
+creates \code{it} iterations of the FLStock \code{stk} using MCMC,
+calls a4aSCA to run the assessment on existing FLStock \code{stk} and 
+FLIndices \code{idx} objects
+script based on
 http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html
-It uses a4aSCA to run the assessment on existing FLStock and FLIndices objects
 }

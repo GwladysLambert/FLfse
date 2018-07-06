@@ -20,7 +20,8 @@ Imports:
     FLife,
     stockassessment,
     doParallel,
-    FLasher
+    FLasher,
+    iterators
 Depends:
     FLCore (>= 2.6.5.9021)
 Suggests:

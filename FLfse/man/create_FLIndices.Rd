@@ -2,18 +2,32 @@
 % Please edit documentation in R/observation_model.R
 \name{create_FLIndices}
 \alias{create_FLIndices}
-\title{Function to create FLIndices of the OM for MSE simulation}
+\title{Function to create several iterations of FLIndices}
 \usage{
-create_FLIndices(idx, stk, stk0, it, seed.nb = 321)
+create_FLIndices(idx, stk, it = NULL,
+  qmod = "~max_q/(1+exp(-steepness*(age - age50)))", qmod_pars = FLPar(max_q
+  = 1, steepness = 1, age50 = max(ages)/10), add.error = FALSE,
+  assessment.yr = NULL, seed.nb = 321)
 }
 \arguments{
-\item{idx}{object of class FLIndices}
+\item{idx}{object of class FLIndices - can be NULL if one does not exist yet,
+it will be created inside the function using \code{qmod} and \code{qmod_pars}}
 
 \item{stk}{object of class FLStock}
 
-\item{stk0}{median of stk iterations created in \link[FLfse]{create_FLStock}}
+\item{it}{iterations, set to NULL as not needed if \code{assessment.yr} 
+is provided (see \code{Details})}
 
-\item{it}{iterations}
+\item{qmod}{default model to create idx from scratch, i.e. logistic function}
+
+\item{qmod_pars}{default model \code{qmod} parameters, i.e. logistic function with
+inflection point of curve = 10% of max age}
+
+\item{add.error}{whether or not the iterated indices should include some random noise, 
+set at FALSE by default}
+
+\item{assessment.yr}{latest assessment year for which an index is to be estimated,
+default is NULL if indices for all years of \code{stk} are to be estimated}
 
 \item{seed.nb}{set seed number}
 }
@@ -21,9 +35,12 @@ create_FLIndices(idx, stk, stk0, it, seed.nb = 321)
 FLIndices
 }
 \description{
-Function to create FLIndices of the OM for MSE simulation
+Function to create several iterations of FLIndices
 }
 \details{
 creates the FLIndices, script based on
 http://www.flr-project.org/doc/An_introduction_to_MSE_using_FLR.html
+If asessment.yr is given, it will assume that indices were already produced up 
+to taht year and that an index.q is available and only estimate FLIndices 
+for that year
 }

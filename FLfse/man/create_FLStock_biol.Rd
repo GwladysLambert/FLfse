@@ -7,18 +7,18 @@ from biological data using existing dataset of WKLife or
 just providing own parameters}
 \usage{
 create_FLStock_biol(latin.name = NULL, common.name = NULL, region = NULL,
-  params = NULL, h = 0.75, it = 5, seed.nb = 321)
+  biol.params = NULL, h = 0.75, it = 5, seed.nb = 321)
 }
 \arguments{
 \item{latin.name}{vector of latin names of species to be selected from WKLife dataset
-(if given, no need for common.name)}
+(if given, no need for \code{common.name})}
 
 \item{common.name}{vector of common names of species to be selected from WKLife dataset
-(if given, no need for latin.name)}
+(if given, no need for \code{latin.name})}
 
 \item{region}{stock area from WKLife dataset}
 
-\item{params}{dataframe of biological params if not using from WKLife stocks 
+\item{biol.params}{dataframe of biological params if not using from WKLife stocks 
 (i.e. if not using the 3 above arguments). No need to provide all variables as FLife is used to 
 complete the set}
 
@@ -44,11 +44,13 @@ https://github.com/shfischer/wklifeVII/blob/master/R/OM1.R
 \dontrun{
 
 # Example using given life history parameter(s)
-test1 <- create_FLStock_biol(params=data.frame(linf=100))
+test1 <- create_FLStock_biol(biol.params=data.frame(linf=100))
 stock.n(test1[[1]]$stk)
+plot(test1[[1]]$stk)
 
 # Example using WKLife dataset
 test2 <- create_FLStock_biol(latin.name="Clupea harengus")
 stock.n(test2[[1]]$stk)
+plot(test2[[1]]$stk)
 }
 }

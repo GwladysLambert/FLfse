@@ -3,11 +3,11 @@
 #' just providing own parameters
 #'
 #' @param latin.name vector of latin names of species to be selected from WKLife dataset
-#' (if given, no need for common.name)
+#' (if given, no need for \code{common.name})
 #' @param common.name vector of common names of species to be selected from WKLife dataset
-#' (if given, no need for latin.name)
+#' (if given, no need for \code{latin.name})
 #' @param region stock area from WKLife dataset
-#' @param params dataframe of biological params if not using from WKLife stocks 
+#' @param biol.params dataframe of biological params if not using from WKLife stocks 
 #' (i.e. if not using the 3 above arguments). No need to provide all variables as FLife is used to 
 #' complete the set
 #' @param h steepness default as 0.75 (can ba a vecor of same length as number of species or stocks)
@@ -18,23 +18,27 @@
 #' https://github.com/shfischer/wklifeVII/blob/master/R/OM1.R
 #' @return a list of "sr", "brp", "stk"
 #'
+#' @importFrom foreach %dopar% foreach 
+#'
 #' @export
 #' 
 #' @examples 
 #' \dontrun{
 #' 
 #' # Example using given life history parameter(s)
-#' test1 <- create_FLStock_biol(params=data.frame(linf=100))
+#' test1 <- create_FLStock_biol(biol.params=data.frame(linf=100))
 #' stock.n(test1[[1]]$stk)
+#' plot(test1[[1]]$stk)
 #' 
 #' # Example using WKLife dataset
 #' test2 <- create_FLStock_biol(latin.name="Clupea harengus")
 #' stock.n(test2[[1]]$stk)
+#' plot(test2[[1]]$stk)
 #' }
 
 
 create_FLStock_biol <- function (latin.name=NULL, common.name=NULL, region=NULL, 
-                                 params = NULL, h=0.75, it = 5, seed.nb=321) {
+                                 biol.params = NULL, h=0.75, it = 5, seed.nb=321) {
 
   ############################
   ### ~~~ Prepare data ~~~ ###
@@ -49,7 +53,7 @@ create_FLStock_biol <- function (latin.name=NULL, common.name=NULL, region=NULL,
   if(!is.null(latin.name))  stock_sub <- stocks_lh[stocks_lh$latin.name %in% latin.name,]
   if(!is.null(common.name)) stock_sub <- stocks_lh[stocks_lh$common %in% common.name,]
   if(!is.null(region))      stock_sub <- stocks_lh[stocks_lh$area %in% region,]
-  if(!is.null(params))      {stock_sub <- params; stock_sub$stock <- "fake"[1:nrow(stock_sub)]}
+  if(!is.null(biol.params)) {stock_sub <- biol.params; stock_sub$stock <- "fake"[1:nrow(stock_sub)]}
   
   ### set steepness
   stock_sub$s <- h
@@ -60,6 +64,8 @@ create_FLStock_biol <- function (latin.name=NULL, common.name=NULL, region=NULL,
   
   OMs <- foreach(i = split(stock_sub, 1:nrow(stock_sub)), .errorhandling = "pass", 
                  .packages = c("FLife", "FLasher")) %dopar% {
+                   
+                 # browser()
                    
                    ## create brp
                    ### get lh params
@@ -113,14 +119,14 @@ create_FLStock_biol <- function (latin.name=NULL, common.name=NULL, region=NULL,
                    years_target <- ((dims(stk)$minyear + 1):100) # set to 75 for example if different fishing pattern for last 25 years? !!!!!!!!!!
                    stk <- fwd(stk, sr = stk_sr, 
                               control = fwdControl(year = years_target, 
-                                                   value = refpts(brp)['msy', 'harvest']*0.5, ## here we can add the option to be able to set whatever in the scenarios!!!
+                                                   value = c(refpts(brp)['msy', 'harvest']*0.5), ## here we can add the option to be able to set whatever in the scenarios!!!
                                                    quant = "f"),
                               residuals = residuals[, ac(years_target)])
                    
                    ### THIS IS WHERE WE COULD CHANGE THE FISHING PATTERN, e.g. roller coaster or one way !!!!!!!!!!!! - could be in the scenarios again
                    
                    ### return list
-                   return(list(sr = stk_sr, brp = brp, stk = stk))
+                   return(list(sr = stk_sr, sr_res = residuals, brp = brp, stk = stk))
                    
                  }
   
@@ -133,12 +139,35 @@ create_FLStock_biol <- function (latin.name=NULL, common.name=NULL, region=NULL,
   ### set names for list elements
   names(OMs) <- stock_sub$stock
 
-  ### subset to last 26 years
+  ### subset everything to last 26 years
   OMs <- lapply(OMs, function(x){
-    names(x)[length(names(x))] <- "stk"
+    #names(x)[length(names(x))] <- "stk"
      x$stk <- window(x$stk, start = 75)
+     x$brp@fbar <- window(x$brp@fbar, start = 75)
+     x$sr_res <- window(x$sr_res, start = 75)
      return(x)
    })
+  
+
+  ### name years 1 to 26
+  OMs <- lapply(OMs, function(x) {
+   # stk
+     x$stk <- qapply(x$stk, function(y) {
+      dimnames(y)$year <- as.character(1:length(dimnames(y)$year))
+      return(y)
+    })
+    tot                     <- range(x$stk)["maxyear"]-range(x$stk)["minyear"] +1
+    range(x$stk)["minyear"] <- 1
+    range(x$stk)["maxyear"] <- tot
+    # sr_res
+      dimnames(x$sr_res)$year <- as.character(1:length(dimnames(x$sr_res)$year))
+   # brp
+    #x$brp <- qapply(x$brp, function(y) {
+      dimnames(x$brp@fbar)$year <- as.character(1:length(dimnames(x$brp@fbar)$year))
+     # return(y)
+   # })
+    return(x)
+  })
   
  # stopCluster(cl)
 

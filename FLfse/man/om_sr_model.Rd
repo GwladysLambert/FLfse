@@ -4,15 +4,19 @@
 \alias{om_sr_model}
 \title{Fit an SR model to FLStock and create residuals for MSE projection}
 \usage{
-om_sr_model(stk, sr_model = "bevholt", method = "L-BFGS-B", it, iy, fy,
-  seed.nb = 321)
+om_sr_model(stk = NULL, srbh.res = NULL, sr_model = "bevholt",
+  method = "L-BFGS-B", it, iy, fy, seed.nb = 321)
 }
 \arguments{
-\item{stk}{FLStock}
+\item{stk}{FLStock - if NULL the \code{sr_model} will be used to create 
+projected residuals}
 
-\item{sr_model}{default is "bevholt"}
+\item{srbh.res}{residuals of FLSR - default is NULL but if given, 
+no need for \code{stk}}
 
-\item{method}{default is "L-BFGS-B", not fit for other methods yet}
+\item{sr_model}{default is \code{"bevholt"}}
+
+\item{method}{default is \code{"L-BFGS-B"}, not fit for other methods yet}
 
 \item{it}{number of iterations}
 
@@ -23,8 +27,9 @@ om_sr_model(stk, sr_model = "bevholt", method = "L-BFGS-B", it, iy, fy,
 \item{seed.nb}{set seed number}
 }
 \value{
-list of median FLSotck, FLSR for FLStock and median FLStock for reference points and
-residuals for projection
+a list of "srbh" (FLSR), "srbh0", i.e. the median of all iterations, and
+"srbh.res", i.e. recruitment residuals for projection period if \code{stk} given,
+or only "srbh.res" if \code{srbh.res} given
 }
 \description{
 Fit an SR model to FLStock and create residuals for MSE projection

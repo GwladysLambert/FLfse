@@ -4,33 +4,54 @@
 \alias{mse_base}
 \title{Run the full MSE}
 \usage{
-mse_base(stk, idx, it, ny, nsqy = 3, sr_init = "bevholt",
-  fmod_init = NULL, qmod_init = NULL, mcmc_init = 100,
-  assessment = "sam", seed.nb = 321)
+mse_base(scens = list(id = "default", stringsAsFactors = FALSE),
+  stock = list(stk = NULL, latin.name = NULL, common.name = NULL, region =
+  NULL, biol.params = NULL, h = 0.75), ctrl.om = list(sr_init = "bevholt",
+  fmod_init = NULL, qmod_init = NULL, mcmc_init = 100), ctrl.idx = list(idx =
+  NULL, qmod_idx = NULL, qmod_pars_idx = NULL, add.error_idx = FALSE),
+  ctrl.sims = list(it = 3, ny = 3, nsqy = 3, seed.nb = 321),
+  ctrl.mp = list(assessment = "sam"))
 }
 \arguments{
-\item{stk}{object of class FLStock}
+\item{scens}{name of scenario}
 
-\item{idx}{object of class FLindex}
+\item{stock}{parameters controling the set up of the FLStock
+\code{stock} = list(\code{stk}, \code{latin.name},
+\code{common.name}, \code{region}, \code{biol.params}, \code{h})
+\code{stk} if using an existing stock assessment - see \code{\link{create_FLStock}} 
+\code{latin.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+\code{common.name} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+\code{region} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+\code{biol.params} if using biological parameters - see \code{\link{create_FLStock_biol}} 
+\code{h}  if using biological parameters - see \code{\link{create_FLStock_biol}}}
 
-\item{it}{number of iterations}
+\item{ctrl.om}{parameters controling the set up of the Operating Model
+\code{ctrl.om} = list(\code{sr_init}, \code{fmod_init}, \code{qmod_init}, \code{mcmc_init})
+\code{sr_init} stock-recruit model for the OM set up, default is bevholt
+\code{qmod_init} catchability submodel for the OM set up
+\code{fmod_init} fishing mortality submodel for the OM set up
+\code{mcmc_init} number of mcmc for the OM set up}
 
-\item{ny}{number of years to project from initial year (iy = maxyear of stk + 1)}
+\item{ctrl.idx}{parameters controling the set up of the Observation Model
+\code{ctrl.idx} = list(\code{idx}, \code{qmod_idx}, \code{qmod_pars_idx}, \code{add.error_idx})
+\code{idx} if using an existing stock assessment - see \code{\link{create_FLStock}} 
+\code{qmod_idx} defines idx selectivity function if idx does not exist as in 
+\code{\link{create_FLStock_biol}} approach. Default is NULL, meaning to use default 
+settings in \code{\link{create_FLIndices}}
+\code{qmod_pars_idx} defines idx selectivity parameters for \code{qmod_idx}
+\code{add.error_idx} whether or not the iterated indices should include some random noise, 
+set at FALSE by default}
 
-\item{nsqy}{number of years to compute status quo metrics, default set at 3}
+\item{ctrl.sims}{parameters controling the set up of the Simulations properties
+\code{ctrl.sims} = list(\code{it}, \code{ny}, \code{nsqy}, \code{seed.nb})
+\code{ny number} of years to project from initial year (iy = maxyear of stk + 1), default set at 3
+\code{it number} of iterations, default set at 3
+\code{nsqy number} of years to compute status quo metrics, default set at 3
+\code{param} seed.nb set seed number}
 
-\item{sr_init}{stock-recruit model for the OM set up, default is bevholt}
-
-\item{fmod_init}{fishing mortality submodel for the OM set up
-default ~te(replace(age, age>9,9), year, k=c(6,8))}
-
-\item{qmod_init}{catchability submodel for the OM set up}
-
-\item{mcmc_init}{number of mcmc for the OM set up}
-
-\item{assessment}{assessment model to be used, default is sam (will also be set up for spict)}
-
-\item{seed.nb}{set seed number}
+\item{ctrl.mp}{parameters controling the set up of the Management Procedure
+\code{assessment} assessment model to be used, default is \code{sam} 
+(will also be set up for \code{spict})}
 }
 \value{
 mse runs
@@ -38,19 +59,51 @@ mse runs
 \description{
 Run the full MSE
 }
+\details{
+can run an MSE based on existing stock, using arguments \code{stk} and \code{idx} 
+(\code{\link{create_FLStock}}), or biological parameters using \code{latin.name}, \code{common.name}, 
+\code{area} or \code{params} (see \code{\link{create_FLStock_biol}}). Although 
+\code{\link{create_FLStock_biol}} can take several several stocks at once, this MSE function can 
+only be run for one stock at a time for now (there will be an option to use scenarios later on to 
+run several stocks in parallel)
+}
 \examples{
 \dontrun{
 
-## Run ple4 example - need to adjust for different number of ages between stk and idx
+## Run ple4 example 
 data(ple4)
 data(ple4.index)
-stk   = ple4[1:8,]
+stk   = ple4[1:8,] # needed to adjust for different number of ages between stk and idx
 idx   = FLIndices(idx=ple4.index)
-test_ple  <-  mse_base(stk = ple4, idx = FLIndices(idx=ple4.index), it = 2, ny = 3)
+test_ple  <-  mse_base(stock = list(stk = ple4), 
+                       ctrl.idx=list(idx = FLIndices(idx=ple4.index)), 
+                       ctrl.sims = list(it = 2, ny = 3))
 
 ## Run cod example
 data("cod4_stk")
+cod4_stk <- window(cod4_stk, end=2016) # no catch in 2017, crashes the simulations as needed to set TAC
 data("cod4_idx")
-test_cod  <-  mse_base(stk = cod4_stk, idx = cod4_idx, it = 2, ny = 3)
+cod4_idx <- window(cod4_idx, end=2016)
+# no uncertainty around FLIndices (perfect knowledge)
+test_cod  <-  mse_base(stock = list(stk = cod4_stk), ctrl.idx=list(idx = cod4_idx),
+                       ctrl.sims = list(it = 2, ny = 3))
+# uncertainty around FLIndices (observation error)
+test_cod_re  <-  mse_base(stock = list(stk = cod4_stk), ctrl.idx=list(idx = cod4_idx, add.error_idx=TRUE),
+                          ctrl.sims = list(it = 2, ny = 3))
+
+## Run params example
+# no uncertainty around FLIndices (perfect knowledge)
+test_params <- mse_base(stock = list(biol.params=data.frame(linf=100)), 
+                        ctrl.sims = list(it = 2, ny = 3, seed.nb=123))
+# uncertainty around FLIndices (observation error)
+test_params_re <- mse_base(stock = list(biol.params=data.frame(linf=100)), 
+                           ctrl.idx=list(add.error_idx=TRUE), 
+                           ctrl.sims = list(it = 2, ny = 3, seed.nb=123))
+
+## Run WKLife example (perfect knowledge)
+test_wklife <- mse_base(stock = list(latin.name="Clupea harengus"), 
+                        ctrl.sims = list(it=2, ny=3, seed.nb= 5))
+
 }
+
 }

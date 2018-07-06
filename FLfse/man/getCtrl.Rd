@@ -2,22 +2,24 @@
 % Please edit documentation in R/functions.R
 \name{getCtrl}
 \alias{getCtrl}
-\title{Define control object for \link[FLash]{fwd}}
+\title{Define control object for \link[FLasher]{fwd}}
 \usage{
-getCtrl(values, quantity, years)
+getCtrl(values, quantity, years, it)
 }
 \arguments{
-\item{values}{}
+\item{values}{target values}
 
-\item{quantity}{}
+\item{quantity}{'f' or 'catch' or...}
 
-\item{years}{}
+\item{years}{years that ctrl needed for}
+
+\item{it}{number of iterations}
 }
 \value{
 ctrl for fwd
 }
 \description{
-Define control object for \link[FLash]{fwd}
+Define control object for \link[FLasher]{fwd}
 }
 \details{
 The fwd method from FLash needs a control object, which is set by this function.
