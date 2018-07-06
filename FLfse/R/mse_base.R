@@ -112,9 +112,9 @@ mse_base <- function(
   ctrl.sims = list(it=3, ny=3, nsqy = 3, seed.nb= 321),
   ctrl.mp   = list(assessment="sam")) {
   
-  ###########################################################################
-  ###             ~~~ ADD IN VALUES BY GIVEN VALUES ~~~                   ###
-  ###########################################################################
+  #########################################################################
+  ###             ~~~ COMPLETE LIST OF ARGUMENTS  ~~~                   ###
+  #########################################################################
   
   ## This is needed to complete the list structure of the inputs with default values 
   ## (we can go back to "no list" but this looks tidier, i.e. easier  to visualise
