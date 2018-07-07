@@ -39,7 +39,9 @@ create_FLIndices <- function(idx, stk, it=NULL,
   
   idcs <- FLIndices()
   
+  ########################################################################################
   ### ~~~ if there was no idx to start with, create one for the first stk iteration~~~ ###
+  ########################################################################################
   
     if (is.null(idx)) { # assessment.yr should be NULL too here...
       
@@ -64,8 +66,9 @@ create_FLIndices <- function(idx, stk, it=NULL,
       idx = FLIndices(idx = idx)
     }
   
-  
+  ########################################################################################
   ### ~~~ create index for each iteration and add uncertainty if add.error = TRUE ~~~ ###
+  ########################################################################################
   
   for (i in 1:length(idx)){
     

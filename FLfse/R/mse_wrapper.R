@@ -31,10 +31,8 @@
 #' }
 #' 
 
-
 run_mse <- function(scenarios, parallel = FALSE) {
   
- # browser()
   # Get arguments for each scenario
   arg_list <- lapply(scenarios, function(scenario) {
     list(
@@ -48,7 +46,7 @@ run_mse <- function(scenarios, parallel = FALSE) {
   
   # to satisfy R CMD check in the foreach() call below
   x <- NULL
-  
+ 
   if (parallel) {
     message("Running scenarios in parallel.")
     output <- foreach::foreach(x = arg_list, .packages = "FLfse", .combine = list, #.export=c("mse_base"),
